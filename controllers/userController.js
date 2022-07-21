@@ -17,7 +17,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400).send({error:'User ALready exists'});
+    res.status(400).send({error:'Email aLready exists!'});
   }
 
   // Hash the passowrd
@@ -63,7 +63,7 @@ const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(400).send({errro:"Invalid credentials"});
+    res.status(400).send({error:"Invalid credentials"});
   }
 });
 

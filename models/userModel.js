@@ -38,12 +38,18 @@ userSchema.methods.toJSON = function (){
     return userObject
 }
 //setting up relation to the other collection
-// userSchema.virtual('tasks', {
-//     ref:'Task',
-//     localField: '_id',
-//     foreignField: 'owner'
+userSchema.virtual('expense', {
+    ref:'Expense',
+    localField: '_id',
+    foreignField: 'owner'
+})
 
-// })
+//setting up relation to the other collection
+userSchema.virtual('income', {
+    ref:'Income',
+    localField: '_id',
+    foreignField: 'owner'
+})
 
 // Delete user's tasks when user is removed
 // userSchema.pre('remove', async function(next){
