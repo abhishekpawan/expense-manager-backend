@@ -54,7 +54,7 @@ This is a Expense Manager web application, where you can track and manage you da
 
 ### Clone the repo
 ```
-git clone https://github.com/abhishekpawan/Expense_Tracker
+git clone https://github.com/abhishekpawan/expense-manager-backend
 ```
 ### To Install all the dependencies
 
