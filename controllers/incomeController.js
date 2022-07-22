@@ -5,7 +5,7 @@ const Income = require("../models/incomeModel");
 // @route POST /api/incomes/create
 // @access Private
 const createIncome = asyncHandler(async (req, res) => {
-  const incomeExists = await Income.findOne({month: req.body.month,year: req.body.year,});
+  const incomeExists = await Income.findOne({month: req.body.month,year: req.body.year, owner:req.user._id});
   if (incomeExists) {
     const newIncome = {
       income: req.body.income,
