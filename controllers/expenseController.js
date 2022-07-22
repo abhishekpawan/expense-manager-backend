@@ -39,7 +39,9 @@ const getAllExpenses = asyncHandler(async(req,res)=>{
       .limit(req.query.limit)
       .skip(req.query.skip)
       .sort(sort);
-
+if(expense.length===0){
+  return res.status(200).send({msg:"No expense available!"});
+}
     res.status(200).send(expense);
   } catch (error) {
     res.status(500).send();
