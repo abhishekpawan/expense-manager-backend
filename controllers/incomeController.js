@@ -8,7 +8,7 @@ const createIncome = asyncHandler(async (req, res) => {
   const incomeExists = await Income.findOne({month: req.body.month,year: req.body.year,});
   if (incomeExists) {
     const newIncome = {
-      income: req.body.income + incomeExists.income,
+      income: req.body.income,
       month: incomeExists.month,
       year: incomeExists.year,
     };
@@ -56,70 +56,7 @@ const getAllIncomes = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc get a particular Income
-// @route GET /api/incomes/all
-// @access Private
-const getIncome = asyncHandler(async (req, res) => {
-  const _id = req.params.id;
-  try {
-    const income = await Income.findOne({ _id, owner: req.user._id });
-    if (!income) {
-      res.status(404).send({ error: "Income not found!" });
-    }
-    res.status(200).send(income);
-  } catch (error) {
-    res.status(500).send();
-  }
-});
-
-// @desc update income
-// @route PATCH /api/incomes/:id
-// @access Private
-const updateIncome = asyncHandler(async (req, res) => {
-  const _id = req.params.id;
-
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ["income", "date"];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-
-  if (!isValidOperation) {
-    return res.status(400).send({ error: "Invalid updates" });
-  }
-  try {
-    const income = await Income.findOne({ _id, owner: req.user._id });
-    if (!income) {
-      return res.status(404).send({ error: "Income not found!" });
-    }
-    updates.forEach((update) => (income[update] = req.body[update]));
-    await income.save();
-    res.status(200).send(income);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-// @desc Delete income
-// @route DELETE /api/incomes/:id
-// @access Private
-const deleteIncome = asyncHandler(async (req, res) => {
-  const _id = req.params.id;
-  try {
-    const income = await Income.findOneAndDelete({ _id, owner: req.user._id });
-    if (!income) {
-      return res.status(404).send({ error: "Income not found!" });
-    }
-    res.status(200).send({ income, msg: "Income succesfully deleted" });
-  } catch (error) {
-    res.status(500).send();
-  }
-});
-
 module.exports = {
   createIncome,
-  getIncome,
   getAllIncomes,
-  deleteIncome,
-  updateIncome,
 };
